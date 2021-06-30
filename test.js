@@ -1,46 +1,32 @@
-// this program tries to find the next prime fibonacci number.
-// i.e. - given a input n, the `nxtPrmFib` function returns a number which is both prime and fibonacci and is greater than the input number.
-
-// the program below is complete and works as detailed in the requirements.
-// the task here is to:
-
-// 1. rationalize and understand the code as best you can.
-// 2. open a PR to improve the code as you see fit.
-
-// Converting to an Angular app or typescript is not considered a necessity here.
-// We're mostly interested in understanding how engineers can critique the code & suggest improvements.
-
-var ispnum = function(num) {
-    for(var i = 2; i < num; i++)
-        if  (num % i === 0) return false;
-    return num > 1;
+const isPrimaryNumber = num => {
+    if (num <= 1) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if(num % i === 0) return false;
+    }
+    return true;
 };
 
-const fibonacci = (num) => {
-    if (num <= 1)return 1;
-    return fibonacci(num - 1) + fibonacci(num - 2);
+const fibonacci = num => {
+    const phi = (1 + Math.sqrt(5))/2;
+    const asymption = Math.pow(phi, num) / Math.sqrt(5);
+    return Math.round(asymption);
 };
 
-function nxtPrmFib(number) {
-    let r = 0;
-    let l = 1;
+const nextPrimeFibbonachi = number => {
+    let line = 1;
+    let fibNumber;
+
     while (true) {
-        var fib = fibonacci(l);
-        console.log('fib', fib, number);
-        if (fib > number) {
-            if (ispnum(fib)) {
-                r = fib;
-                break;
-            } else {
-                l = l + 1;
-                console.warn('bumping to ', fib);
-            }
+        fibNumber = fibonacci(line);
+        console.log('fib', fibNumber, number);
+        if (fibNumber > number && isPrimaryNumber(fibNumber)) {
+            break;
         } else {
-            l = l + 1;
-            console.warn('bumping to', fib);
+            line = line + 1;
+            console.warn('bumping to', fibNumber);
         }
     }
-    console.warn('Next prime fib ', r);
+    console.warn('Next prime fib ', fibNumber);
 }
 
-nxtPrmFib(20);
+nextPrimeFibbonachi(21);
